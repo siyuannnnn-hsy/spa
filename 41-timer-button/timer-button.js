@@ -1,24 +1,23 @@
 var $timerButton = (function () {
-    var $btn = $('<input id="btn" type="button"  disabled/>'),
-        cfg = {
-            container:'body',
-            num:6,
-            title:'同意'
-        },
-        timer;
-
-    $btn.css({
-        height:'50px',
-        width:'100px'
-    })
-
     function show(conf) {
+        var $btn = $('<input id="btn" type="button"  disabled/>'),
+            cfg = {
+                container:'body',
+                num:6,
+                title:'同意',
+                onClick:null
+            },
+            timer;
+        $btn.css({
+            height:'50px',
+            width:'100px'
+        })
+
+    
         //1.DOM draw
         $(cfg.container).append($btn);
         $.extend(cfg,conf)
-
         $btn.val(cfg.title+"("+cfg.num+"s)");
-
         timer = setInterval(() => {
             cfg.num --;
             if(cfg.num === 0){
@@ -28,19 +27,14 @@ var $timerButton = (function () {
             }else{
                 $btn.val(cfg.title+'('+cfg.num+'s)')
             }
-            
         }, (1000)); 
-        //2.event bind   
+        $btn.click(cfg.onClick)
     }
-
-    $btn.click(function(){
-        cfg.onClick()
-    })
     return {
         show : show
     };
-
 }());
+
 
 //不用page load event
 
